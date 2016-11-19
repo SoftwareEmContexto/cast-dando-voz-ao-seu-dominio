@@ -1,0 +1,306 @@
+﻿public class Hotel
+{
+    public string Endereco { get; set; }
+    public string Bairro { get; set; }
+    public string Cidade { get; set; }
+    public string Estado { get; set; }
+    public int Cep { get; set; }
+
+    public string TelefonePrincipal { get; set; }
+    public string TelefoneResidencial { get; set; }
+    public string Celular { get; set; }
+
+	public IList<Quarto> Quartos { get; set; }
+}
+
+public class Quarto
+{
+    public int Numero { get; set; }
+    public int Andar { get; set; }
+    public int Corredor { get; set; }
+
+    public bool ArCondicionado { get; set; }
+    public bool TVLed { get; set; }
+    public bool Banheiro { get; set; }
+    public bool Frigobar { get; set; }
+    public bool Wifi { get; set; }
+    public bool CamaDeCasal { get; set; }
+    public bool Varanda { get; set; }
+}
+
+public class Hospede
+{
+    public string PrimeiroNome { get; set; }
+    public string Sobrenome { get; set; }    
+	public int Idade { get; set; }
+    public string Cpf { get; set; }
+    public string Email { get; set; }
+
+    public string Endereco { get; set; }
+    public string Bairro { get; set; }
+    public string Cidade { get; set; }
+    public string Estado { get; set; }
+    public int Cep { get; set; }
+
+    public string TelefonePrincipal { get; set; }
+    public string TelefoneResidencial { get; set; }
+    public string Celular { get; set; }
+}
+
+public class Endereco : ObjetoDeValor<Endereco>
+{
+    public string Endereco { get; set; }
+    public string Bairro { get; set; }
+    public string Cidade { get; set; }
+    public string Estado { get; set; }
+    public int Cep { get; set; }
+
+
+    protected override bool EqualsCore(Endereco other)
+    {
+        return Endereco == other.Endereco
+                && Bairro == other.Bairro
+                && Cidade == other.Cidade
+                && Estado == other.Estado
+                && Cep == other.Cep;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        unchecked
+        {
+            int hashCode = Endereco.GetHashCode();
+            hashCode = (hashCode*397) ^ Bairro.GetHashCode();
+            hashCode = (hashCode * 397) ^ Cidade.GetHashCode();
+            hashCode = (hashCode * 397) ^ Estado.GetHashCode();
+            hashCode = (hashCode * 397) ^ Cep.GetHashCode();
+
+            return hashCode;
+        }
+    }
+}
+
+public class Reserva
+{
+    public int NumeroDoQuarto { get; set; }
+    public DateTime DataDaChegada { get; set; }
+    public DateTime DataDeSaida { get; set; }
+    public string NomeDoHospede { get; set; }
+    public string Cpf { get; set; }
+}
+
+public class Telefone : ObjetoDeValor<Telefone>
+{
+    public string Numero { get; set; }
+
+    public Telefone(string numero)
+    {
+        Numero = numero;
+    }
+
+    protected override bool EqualsCore(Telefone other)
+    {
+        return Numero == other.Numero;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        return Numero.GetHashCode();
+    }
+}
+
+public class AgendaTelefonica : ObjetoDeValor<AgendaTelefonica>
+{
+    public Telefone TelefonePrincipal { get; set; }
+    public Telefone TelefoneResidencial { get; set; }
+    public Telefone Celular { get; set; }
+    protected override bool EqualsCore(AgendaTelefonica other)
+    {
+        return TelefonePrincipal == other.TelefonePrincipal
+                && TelefoneResidencial == other.TelefoneResidencial
+                && Celular == other.Celular;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        unchecked
+        {
+            int hashCode = TelefonePrincipal.GetHashCode();
+            hashCode = (hashCode*397) ^ TelefoneResidencial.GetHashCode();
+            hashCode = (hashCode * 397) ^ Celular.GetHashCode();
+
+            return hashCode;
+        }
+    }
+}
+
+public class Idade : ObjetoDeValor<Idade>
+{
+    public DateTime DataDeNascimento { get; set; }
+	public int Valor => DateTime.Now.Year - DataDeNascimento.Year;
+
+    public Idade(DateTime dataDeNascimento)
+    {
+        DataDeNascimento = dataDeNascimento;
+    }
+
+    protected override bool EqualsCore(Idade other)
+    {
+        return DataDeNascimento == other.DataDeNascimento;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        return DataDeNascimento.GetHashCode();
+    }
+}
+
+public class Nome : ObjetoDeValor<Nome>
+{
+    public string PrimeiroNome { get; set; }
+	public string Sobrenome { get; set; }
+
+    public Nome(string primeiroNome, string sobreNome)
+    {
+        PrimeiroNome = primeiroNome;
+		Sobrenome = sobreNome;
+    }
+
+    protected override bool EqualsCore(Idade other)
+    {
+        return PrimeiroNome == other.PrimeiroNome
+			&& Sobrenome == other.Sobrenome;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        unchecked
+        {
+            int hashCode = PrimeiroNome.GetHashCode();
+            hashCode = (hashCode * 397) ^ Sobrenome.GetHashCode();
+            
+            return hashCode;
+        }
+    }
+}
+
+public class Hotel
+{
+	private IList<Quarto> _Quartos;
+
+    public string Endereco { get; set; }
+    public string Bairro { get; set; }
+    public string Cidade { get; set; }
+    public string Estado { get; set; }
+    public int Cep { get; set; }
+
+    public string TelefonePrincipal { get; set; }
+    public string TelefoneResidencial { get; set; }
+    public string Celular { get; set; }
+
+	public IEnumerable<Quarto> Quartos { get { _Quartos; }; set; }
+
+
+	public void AdicionarQUarto(Quarto quarto)
+	{
+		if(!_Quartos.Contains(quarto))
+			_Quartos.Add(quarto);
+	}
+}
+
+public class Email : ObjetoDeValor<Email>
+{
+    public string Endereco { get; }
+
+    public Email(string enderecoDeEmail)
+    {
+        if (!(ValidarEnderecoDeEmail(enderecoDeEmail)))
+            throw new InvalidOperationException("Endereço de email inválido");
+
+        Endereco = enderecoDeEmail;
+    }
+
+    protected override bool EqualsCore(Email other)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        throw new NotImplementedException();
+    }
+
+    private bool ValidarEnderecoDeEmail(string emailAddress)
+    {
+        string regexPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+        Match matches = Regex.Match(emailAddress, regexPattern);
+        return matches.Success;
+    }
+}
+
+public class CPF : ObjetoDeValor<CPF>
+{
+    public string Numero { get; }
+
+    public CPF(string numeroDoCpf)
+    {
+        if (!validarCPF(numeroDoCpf))
+            throw new InvalidOperationException("CPF inválido");
+
+        Numero = numeroDoCpf;
+    }
+
+    protected override bool EqualsCore(CPF other)
+    {
+        return Numero == other.Numero;
+    }
+
+    protected override int GetHashCodeCore()
+    {
+        return Numero.GetHashCode();
+    }
+
+    private bool validarCPF(string CPF)
+    {
+        int[] mt1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        int[] mt2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        string TempCPF;
+        string Digito;
+        int soma;
+        int resto;
+
+        CPF = CPF.Trim();
+        CPF = CPF.Replace(".", "").Replace("-", "");
+
+        if (CPF.Length != 11)
+            return false;
+
+        TempCPF = CPF.Substring(0, 9);
+        soma = 0;
+        for (int i = 0; i < 9; i++)
+            soma += int.Parse(TempCPF[i].ToString()) * mt1[i];
+
+        resto = soma % 11;
+        if (resto < 2)
+            resto = 0;
+        else
+            resto = 11 - resto;
+
+        Digito = resto.ToString();
+        TempCPF = TempCPF + Digito;
+        soma = 0;
+
+        for (int i = 0; i < 10; i++)
+            soma += int.Parse(TempCPF[i].ToString()) * mt2[i];
+
+        resto = soma % 11;
+        if (resto < 2)
+            resto = 0;
+        else
+            resto = 11 - resto;
+
+        Digito = Digito + resto.ToString();
+
+        return CPF.EndsWith(Digito);
+    }
+}
