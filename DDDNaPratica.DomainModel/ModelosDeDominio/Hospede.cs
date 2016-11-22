@@ -5,8 +5,8 @@ namespace DDDNaPratica.DomainModel
 {
     public class Hospede : Entidade
     {
-        public string PrimeiroNome { get; set; }
-        public string Sobrenome { get; set; }
+        public Nome Nome { get; set; }
+
         public Idade Idade { get; set; }
         public CPF Cpf { get; set; }
         public Email Email { get; set; }
@@ -16,7 +16,7 @@ namespace DDDNaPratica.DomainModel
         public AgendaTelefonica AgendaTelefonica { get; set; }
 
         public Hospede(CPF cpf, Idade idade, AgendaTelefonica agenda,
-            Endereco endereco, Email email)
+            Endereco endereco, Email email, Nome nome)
         {
             if (idade.Valor < 18)
                 throw new InvalidOperationException();
@@ -26,6 +26,7 @@ namespace DDDNaPratica.DomainModel
             AgendaTelefonica = agenda;
             Endereco = endereco;
             Email = email;
+            Nome = nome;
         }
     }
 }
