@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using DDDNaPratica.DomainModel.ObjetosDeValor;
+using System.Collections.Generic;
 
 namespace DDDNaPratica.DomainModel
 {
@@ -10,7 +10,7 @@ namespace DDDNaPratica.DomainModel
         public Endereco Endereco { get; }
         public AgendaTelefonica AgendaTelefonica { get; }
 
-        public IEnumerable<Quarto> Quartos { get { return _Quartos; }; }
+        public IEnumerable<Quarto> Quartos { get { return _Quartos; } }
 
         public void AdicionarQUarto(Quarto quarto)
         {

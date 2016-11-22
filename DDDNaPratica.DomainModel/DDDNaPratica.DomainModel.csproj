@@ -49,6 +49,7 @@
     <Compile Include="ModelosDeDominio\Hospede.cs" />
     <Compile Include="ModelosDeDominio\Hotel.cs" />
     <Compile Include="ObjetosDeValor\Idade.cs" />
+    <Compile Include="ObjetosDeValor\Nome.cs" />
     <Compile Include="ObjetosDeValor\ObjetoDeValor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelosDeDominio\Quarto.cs" />
